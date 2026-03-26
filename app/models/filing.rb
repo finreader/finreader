@@ -1,4 +1,6 @@
 class Filing < ApplicationRecord
+  include AASM
+
   belongs_to :company
 
   validates :form_type, presence: true, inclusion: { in: %w[10-K 10-Q] }
@@ -10,14 +12,33 @@ class Filing < ApplicationRecord
   scope :quarterly, -> { where(form_type: "10-Q") }
   scope :by_date, -> { order(filing_date: :desc) }
 
-  def slug
-    year = period_of_report.year
-    form = form_type.downcase
-    "#{year}-#{form}"
+  aasm column: :status do
+    state :pending, initial: true
+    state :processing
+    state :completed
+    state :failed
+
+    event :process do
+      transitions from: :pending, to: :processing
+    end
+
+    event :complete do
+      transitions from: :processing, to: :completed
+    end
+
+    event :fail do
+      transitions from: :processing, to: :failed
+    end
+
+    event :retry_fetch do
+      transitions from: :failed, to: :pending
+    end
   end
 
-  def parsed?
-    parsed_sections.present? && parsed_sections["sections"].present?
+  def slug
+    date = period_of_report.strftime("%Y-%m-%d")
+    form = form_type.downcase
+    "#{date}-#{form}"
   end
 
   def sections

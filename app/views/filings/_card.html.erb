@@ -3,7 +3,7 @@
   <div class="flex items-center justify-between">
     <div>
       <span class="font-sans font-medium text-stone-900">
-        <%= filing.form_type %> — FY <%= filing.period_of_report.year %>
+        <%= filing.form_type %> — <%= filing.form_type == "10-K" ? "FY #{filing.period_of_report.year}" : "Q ending #{filing.period_of_report.strftime('%b %d, %Y')}" %>
       </span>
       <span class="text-stone-400 text-sm ml-3">
         Filed <%= filing.filing_date.strftime("%B %d, %Y") %>

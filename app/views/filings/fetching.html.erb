@@ -5,22 +5,28 @@
     <h1 class="font-sans text-xl font-semibold text-stone-900 mb-2">
       <%= @company.ticker %> <%= @filing.form_type %> — <%= @filing.period_of_report.year %>
     </h1>
-    <p class="text-stone-500 mb-6">
-      We're fetching this document from SEC EDGAR. This usually takes a few seconds.
-    </p>
-    <div class="flex items-center justify-center gap-2 text-stone-400 mb-8">
-      <svg class="animate-spin h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
-      </svg>
-      <span class="text-sm">Processing...</span>
-    </div>
-    <p class="text-sm text-stone-400">
-      This page will refresh automatically.
-    </p>
+
+    <% if @filing.failed? %>
+      <p class="text-stone-500 mb-6">
+        Something went wrong fetching this document. Please try again later.
+      </p>
+    <% else %>
+      <p class="text-stone-500 mb-6">
+        We're fetching this document from SEC EDGAR. This usually takes a few seconds.
+      </p>
+      <div class="flex items-center justify-center gap-2 text-stone-400 mb-8">
+        <svg class="animate-spin h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+          <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+          <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
+        </svg>
+        <span class="text-sm">Processing...</span>
+      </div>
+      <p class="text-sm text-stone-400">
+        This page will refresh automatically.
+      </p>
+      <script>
+        setTimeout(function() { window.location.reload(); }, 5000);
+      </script>
+    <% end %>
   </div>
 </div>
-
-<script>
-  setTimeout(function() { window.location.reload(); }, 5000);
-</script>

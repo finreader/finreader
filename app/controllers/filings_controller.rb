@@ -2,22 +2,26 @@ class FilingsController < ApplicationController
   def show
     @company = Company.find_by!(ticker: params[:company_ticker].upcase)
 
-    # Parse slug like "2026-10-k" into year + form_type
+    # Parse slug like "2024-01-31-10-k" into date + form_type
     slug = params[:slug].to_s.downcase
-    unless slug.match?(/\A\d{4}-10-[kq]\z/)
+    unless slug.match?(/\A\d{4}-\d{2}-\d{2}-10-[kq]\z/)
       redirect_to company_path(@company.ticker), alert: "Invalid filing format"
       return
     end
 
-    year = slug[0..3].to_i
-    form_type = slug[5..].upcase # "10-k" -> "10-K"
+    date_str = slug[0..9]     # "2024-01-31"
+    form_type = slug[11..].upcase # "10-k" -> "10-K"
 
-    @filing = @company.filings.find_by!(form_type: form_type, period_of_report: Date.new(year, 1, 1)..Date.new(year, 12, 31))
+    @filing = @company.filings.find_by!(form_type: form_type, period_of_report: Date.parse(date_str))
 
-    if @filing.parsed?
+    if @filing.completed?
       @sections = @filing.sections
-    else
+    elsif @filing.pending?
+      @filing.process!
       FetchFilingJob.perform_later(@filing.id)
+      render :fetching
+    else
+      # processing or failed — just show the fetching/status page
       render :fetching
     end
   rescue ActiveRecord::RecordNotFound

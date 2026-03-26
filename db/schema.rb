@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_03_26_152408) do
+ActiveRecord::Schema[8.1].define(version: 2026_03_26_183338) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -33,6 +33,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_26_152408) do
     t.jsonb "parsed_sections", default: {}
     t.date "period_of_report", null: false
     t.text "raw_html"
+    t.string "status", default: "pending", null: false
     t.datetime "updated_at", null: false
     t.index ["accession_number"], name: "index_filings_on_accession_number", unique: true
     t.index ["company_id", "form_type", "filing_date"], name: "index_filings_on_company_id_and_form_type_and_filing_date", unique: true
