@@ -14,13 +14,12 @@ class FilingsController < ApplicationController
 
     @filing = @company.filings.find_by!(form_type: form_type, period_of_report: Date.new(year, 1, 1)..Date.new(year, 12, 31))
 
-    # Fetch and parse the HTML if not already done
-    unless @filing.parsed?
-      EdgarSyncService.fetch_and_parse_filing(@filing)
-      @filing.reload
+    if @filing.parsed?
+      @sections = @filing.sections
+    else
+      FetchFilingJob.perform_later(@filing.id)
+      render :fetching
     end
-
-    @sections = @filing.sections
   rescue ActiveRecord::RecordNotFound
     redirect_to company_path(params[:company_ticker]), alert: "Filing not found"
   end
