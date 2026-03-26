@@ -25,7 +25,7 @@ class EdgarSyncService
   # Fetch and parse a filing's HTML content. Stores raw_html and parsed_sections.
   # Returns the updated Filing record.
   def self.fetch_and_parse_filing(filing)
-    return filing if filing.parsed?
+    return filing if filing.completed?
 
     # We need the primary document path from EDGAR submissions
     submissions = EdgarClient.fetch_submissions(filing.company.cik)
