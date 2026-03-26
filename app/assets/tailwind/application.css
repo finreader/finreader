@@ -1,0 +1,126 @@
+@import "tailwindcss";
+
+@theme {
+  --font-serif: "Source Serif 4", Georgia, serif;
+  --font-sans: "Inter", system-ui, sans-serif;
+  --font-mono: "SF Mono", ui-monospace, monospace;
+}
+
+/* Zen reading typography for filing content */
+.filing-reader {
+  font-family: var(--font-serif);
+  font-size: 1rem;
+  line-height: 1.8;
+  color: var(--color-stone-800);
+}
+
+.filing-reader h1,
+.filing-reader h2,
+.filing-reader h3,
+.filing-reader h4,
+.filing-reader h5,
+.filing-reader h6 {
+  font-family: var(--font-sans);
+  font-weight: 600;
+  color: var(--color-stone-900);
+  margin-top: 2em;
+  margin-bottom: 0.75em;
+}
+
+/* Paragraph spacing — SEC filings use div>span instead of <p> */
+.filing-reader p,
+.filing-reader > div > div {
+  margin-bottom: 1em;
+}
+
+/* Subheadings inside content (short text blocks that act as headers) */
+.filing-reader [data-subheading] {
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 1.05rem;
+  color: var(--color-stone-900);
+  margin-top: 1.75em;
+  margin-bottom: 0.5em;
+}
+
+.filing-reader a {
+  color: var(--color-blue-700);
+  text-decoration: underline;
+  text-decoration-color: var(--color-blue-300);
+  text-underline-offset: 2px;
+}
+
+.filing-reader a:hover {
+  text-decoration-color: var(--color-blue-700);
+}
+
+/* Horizontal rules used as section dividers */
+.filing-reader hr {
+  border: none;
+  border-top: 1px solid var(--color-stone-200);
+  margin: 2em 0;
+}
+
+/* Bullet lists */
+.filing-reader ul {
+  list-style: disc;
+  padding-left: 1.5em;
+  margin: 1em 0;
+}
+
+.filing-reader ul li {
+  margin-bottom: 0.5em;
+  padding-left: 0.25em;
+}
+
+/* Prevent horizontal scroll on the document */
+.filing-reader {
+  overflow-x: hidden;
+}
+
+/* Financial tables — preserve original SEC styling, wrap in scroll container */
+.filing-reader table {
+  margin: 1.5em 0;
+  font-size: 0.875rem;
+  white-space: nowrap;
+}
+
+.filing-reader table td,
+.filing-reader table th {
+  padding-left: 0.25em;
+  padding-right: 0.25em;
+}
+
+/* Scroll wrapper — added by parser around each table */
+.table-wrapper {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  max-width: 100%;
+  padding-right: 0.5em;
+}
+
+/* Table scroll wrapper */
+.table-scroll {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Collapsible section toggle */
+.section-collapsed .section-content {
+  display: none;
+}
+
+.section-toggle {
+  cursor: pointer;
+  user-select: none;
+}
+
+/* Table of contents */
+.toc-link {
+  transition: color 0.15s, border-color 0.15s;
+}
+
+.toc-link--active {
+  color: var(--color-stone-900);
+  border-left-color: var(--color-stone-900);
+}

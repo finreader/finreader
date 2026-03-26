@@ -1,0 +1,15 @@
+{
+  "ignored_warnings": [
+    {
+      "warning_type": "Cross-Site Scripting",
+      "fingerprint": "1b26c5bbfd78937aa242aa45c31e8f24b706609564931271f1b61c221704c6ff",
+      "check_name": "CrossSiteScripting",
+      "message": "Unescaped model attribute",
+      "file": "app/views/filings/show.html.erb",
+      "line": 63,
+      "note": "Content is sanitized by FilingParser.clean_html before storage"
+    }
+  ],
+  "updated": "2026-03-26",
+  "brakeman_version": "8.0.4"
+}

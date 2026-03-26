@@ -1,0 +1,21 @@
+<% if @not_found %>
+  <div class="px-5 py-4 text-stone-500 text-sm">
+    No company found for "<%= @query %>". Try a different ticker symbol.
+  </div>
+<% elsif @error %>
+  <div class="px-5 py-4 text-red-600 text-sm">
+    Something went wrong: <%= @error %>
+  </div>
+<% elsif @company %>
+  <a href="<%= company_path(@company.ticker) %>"
+     data-search-result="true"
+     class="flex items-center justify-between px-5 py-4 hover:bg-stone-50 transition-colors">
+    <div>
+      <span class="font-sans font-semibold text-stone-900"><%= @company.ticker %></span>
+      <span class="text-stone-500 ml-2"><%= @company.name.titleize %></span>
+    </div>
+    <svg class="w-5 h-5 text-stone-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+    </svg>
+  </a>
+<% end %>

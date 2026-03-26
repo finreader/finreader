@@ -1,0 +1,19 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  company: one
+  form_type: MyString
+  filing_date: 2026-03-26
+  period_of_report: 2026-03-26
+  accession_number: MyString
+  raw_html: MyText
+  parsed_sections: 
+
+two:
+  company: two
+  form_type: MyString
+  filing_date: 2026-03-26
+  period_of_report: 2026-03-26
+  accession_number: MyString
+  raw_html: MyText
+  parsed_sections: 

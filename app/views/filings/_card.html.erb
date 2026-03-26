@@ -1,0 +1,16 @@
+<%= link_to company_filing_path(company.ticker, filing.slug),
+  class: "block px-5 py-4 bg-white rounded-lg border border-stone-200 hover:border-stone-400 hover:shadow-sm transition-all" do %>
+  <div class="flex items-center justify-between">
+    <div>
+      <span class="font-sans font-medium text-stone-900">
+        <%= filing.form_type %> — FY <%= filing.period_of_report.year %>
+      </span>
+      <span class="text-stone-400 text-sm ml-3">
+        Filed <%= filing.filing_date.strftime("%B %d, %Y") %>
+      </span>
+    </div>
+    <svg class="w-5 h-5 text-stone-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+    </svg>
+  </div>
+<% end %>

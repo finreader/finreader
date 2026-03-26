@@ -1,0 +1,38 @@
+<% content_for(:title) { "#{@company.ticker} — Finreader" } %>
+
+<div class="max-w-3xl mx-auto px-4 py-12">
+  <div class="mb-2">
+    <%= link_to "← Back", root_path, class: "text-sm text-stone-500 hover:text-stone-700" %>
+  </div>
+
+  <header class="mb-10">
+    <h1 class="font-sans text-3xl font-bold text-stone-900"><%= @company.ticker %></h1>
+    <p class="text-stone-500 text-lg mt-1"><%= @company.name.titleize %></p>
+  </header>
+
+  <% if @annual_filings.any? %>
+    <section class="mb-10">
+      <h2 class="font-sans text-sm font-semibold text-stone-400 uppercase tracking-wider mb-4">Annual Reports (10-K)</h2>
+      <div class="space-y-2">
+        <% @annual_filings.each do |filing| %>
+          <%= render "filings/card", filing: filing, company: @company %>
+        <% end %>
+      </div>
+    </section>
+  <% end %>
+
+  <% if @quarterly_filings.any? %>
+    <section>
+      <h2 class="font-sans text-sm font-semibold text-stone-400 uppercase tracking-wider mb-4">Quarterly Reports (10-Q)</h2>
+      <div class="space-y-2">
+        <% @quarterly_filings.each do |filing| %>
+          <%= render "filings/card", filing: filing, company: @company %>
+        <% end %>
+      </div>
+    </section>
+  <% end %>
+
+  <% if @annual_filings.empty? && @quarterly_filings.empty? %>
+    <p class="text-stone-500 text-center py-12">No 10-K or 10-Q filings found for this company.</p>
+  <% end %>
+</div>
