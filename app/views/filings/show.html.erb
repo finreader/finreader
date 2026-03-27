@@ -1,6 +1,6 @@
 <% content_for(:title) { "#{@company.ticker} #{@filing.form_type} #{@filing.period_of_report.year} — Finreader" } %>
 
-<div class="min-h-screen" data-controller="toc">
+<div class="min-h-screen" data-controller="toc scroll-position" data-scroll-position-key-value="<%= @company.ticker %>-<%= @filing.slug %>">
   <%# Top bar %>
   <header class="sticky top-0 z-10 bg-stone-50/95 backdrop-blur border-b border-stone-200 px-4 py-3">
     <div class="max-w-7xl mx-auto flex items-center justify-between">
